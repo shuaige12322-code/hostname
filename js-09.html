@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Will you be my Valentine?</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffe4e1;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    .box {
+      text-align: center;
+    }
+    h1 {
+      color: #d63384;
+      margin-bottom: 40px;
+    }
+    button {
+      padding: 12px 28px;
+      margin: 0 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .yes {
+      background: #ff69b4;
+      color: #fff;
+    }
+    .yes:hover {
+      background: #ff1493;
+    }
+    .no {
+      background: #dcdcdc;
+      position: absolute;   /* 关键：让 JS 能随便改 left/top */
+    }
+    .love-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: #ff69b4;
+      opacity: 0;          /* 先藏住 */
+      transition: opacity 1s;
+    }
+    .love-text.show {
+      opacity: 1;          /* 淡入 */
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Will you be my Valentine?</h1>
+    <button class="yes" onclick="sayYes()">Yes!</button>
+    <button class="no" onmouseover="runAway(this)">No</button>
+  </div>
+  <div id="love" class="love-text">你真好 ❤</div>
+
+  <script>
+    // 让 No 按钮随机换位置
+    function runAway(btn) {
+      const pad = 100; // 距离窗口边缘最小距离
+      const maxX = window.innerWidth  - btn.offsetWidth  - pad;
+      const maxY = window.innerHeight - btn.offsetHeight - pad;
+      const x = Math.floor(Math.random() * maxX) + pad;
+      const y = Math.floor(Math.random() * maxY) + pad;
+      btn.style.left = x + 'px';
+      btn.style.top  = y + 'px';
+    }
+
+    // 点击 Yes 的回应
+    function sayYes() {
+      const love = document.getElementById('love');
+      love.classList.add('show');
+    }
+
+    // 页面加载后先随机一次，防止一开始就被点到
+    window.onload = () => runAway(document.querySelector('.no'));
+  </script>
+</body>
+</html>
